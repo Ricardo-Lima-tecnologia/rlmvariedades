@@ -8,16 +8,40 @@ import Testimonials from '@/components/home/Testimonials';
 import NewsletterBanner from '@/components/home/NewsletterBanner';
 
 export default function Home() {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['products'],
-    queryFn: () => base44.entities.Product.filter({ active: true }, '-created_date', 50),
+    queryFn: async () => {
+      console.log('Fetching products from Base44...');
+      try {
+        const result = await base44.entities.Product.filter({ active: true }, '-created_date', 50);
+        console.log('Products fetched:', result);
+        return result;
+      } catch (err) {
+        console.error('Error fetching products:', err);
+        throw err;
+      }
+    },
   });
 
   const products = Array.isArray(data) ? data : [];
+  console.log('Products array length:', products.length);
+  
   const bestSellers = products.filter(p => p.best_seller).slice(0, 8);
   const featured = products.filter(p => p.featured).slice(0, 8);
   const deals = products.filter(p => p.is_deal).slice(0, 8);
   const newProducts = products.filter(p => p.is_new).slice(0, 4);
+
+  if (error) {
+    console.error('Query error:', error);
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-600 mb-2">Erro ao carregar produtos</h2>
+          <p className="text-muted-foreground">{error.message}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
