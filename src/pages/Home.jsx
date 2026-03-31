@@ -8,11 +8,12 @@ import Testimonials from '@/components/home/Testimonials';
 import NewsletterBanner from '@/components/home/NewsletterBanner';
 
 export default function Home() {
-  const { data: products = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['products'],
     queryFn: () => base44.entities.Product.filter({ active: true }, '-created_date', 50),
   });
 
+  const products = Array.isArray(data) ? data : [];
   const bestSellers = products.filter(p => p.best_seller).slice(0, 8);
   const featured = products.filter(p => p.featured).slice(0, 8);
   const deals = products.filter(p => p.is_deal).slice(0, 8);

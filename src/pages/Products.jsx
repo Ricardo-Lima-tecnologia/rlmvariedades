@@ -16,10 +16,12 @@ export default function Products() {
   const [category, setCategory] = useState('all');
   const [sortBy, setSortBy] = useState('popular');
 
-  const { data: products = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['all-products'],
     queryFn: () => base44.entities.Product.filter({ active: true }, '-created_date', 200),
   });
+
+  const products = Array.isArray(data) ? data : [];
 
   const filtered = useMemo(() => {
     let result = products;

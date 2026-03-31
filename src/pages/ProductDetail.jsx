@@ -19,11 +19,12 @@ export default function ProductDetail() {
   const [selectedVariation, setSelectedVariation] = useState('');
   const { addItem } = useCart();
 
-  const { data: products = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['product-detail-all'],
     queryFn: () => base44.entities.Product.filter({ active: true }, '-created_date', 200),
   });
 
+  const products = Array.isArray(data) ? data : [];
   const product = products.find(p => p.slug === slug);
   const related = products.filter(p => p.id !== product?.id && p.category === product?.category).slice(0, 4);
 

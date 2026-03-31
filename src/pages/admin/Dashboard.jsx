@@ -6,14 +6,17 @@ import { formatPrice } from '@/lib/constants';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 export default function AdminDashboard() {
-  const { data: orders = [] } = useQuery({
+  const { data: ordersData } = useQuery({
     queryKey: ['admin-orders'],
     queryFn: () => base44.entities.Order.list('-created_date', 200),
   });
-  const { data: products = [] } = useQuery({
+  const { data: productsData } = useQuery({
     queryKey: ['admin-products-count'],
     queryFn: () => base44.entities.Product.list('-created_date', 200),
   });
+
+  const orders = Array.isArray(ordersData) ? ordersData : [];
+  const products = Array.isArray(productsData) ? productsData : [];
 
   const totalRevenue = orders.filter(o => o.status !== 'cancelled').reduce((s, o) => s + (o.total || 0), 0);
   const pendingOrders = orders.filter(o => o.status === 'pending').length;

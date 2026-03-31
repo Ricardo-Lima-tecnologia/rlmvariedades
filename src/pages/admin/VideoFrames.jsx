@@ -11,10 +11,12 @@ export default function VideoFrames() {
   const [generating, setGenerating] = useState({}); // { productId: true }
   const qc = useQueryClient();
 
-  const { data: products = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['admin-products-videoframes'],
     queryFn: () => base44.entities.Product.list('-created_date', 300),
   });
+
+  const products = Array.isArray(data) ? data : [];
 
   const filtered = products.filter(p =>
     !search || p.name?.toLowerCase().includes(search.toLowerCase())

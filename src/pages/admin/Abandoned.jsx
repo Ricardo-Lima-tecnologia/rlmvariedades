@@ -11,10 +11,12 @@ import { toast } from 'sonner';
 export default function AdminAbandoned() {
   const [search, setSearch] = useState('');
 
-  const { data: orders = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['admin-abandoned'],
     queryFn: () => base44.entities.Order.filter({ status: 'pending' }, '-created_date', 100),
   });
+
+  const orders = Array.isArray(data) ? data : [];
 
   const TWO_HOURS = 2 * 60 * 60 * 1000;
   const abandoned = orders.filter(o => {

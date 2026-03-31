@@ -7,10 +7,12 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, 
 export default function AdminSales() {
   const [period, setPeriod] = useState(30);
 
-  const { data: orders = [] } = useQuery({
+  const { data } = useQuery({
     queryKey: ['admin-orders-sales'],
     queryFn: () => base44.entities.Order.list('-created_date', 500),
   });
+
+  const orders = Array.isArray(data) ? data : [];
 
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - period);

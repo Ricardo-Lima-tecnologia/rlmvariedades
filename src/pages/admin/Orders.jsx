@@ -22,10 +22,12 @@ export default function AdminOrders() {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const qc = useQueryClient();
 
-  const { data: orders = [], isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['admin-orders-full'],
     queryFn: () => base44.entities.Order.list('-created_date', 500),
   });
+
+  const orders = Array.isArray(data) ? data : [];
 
   const updateStatus = useMutation({
     mutationFn: ({ id, status }) => base44.entities.Order.update(id, { status }),
