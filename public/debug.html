@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Variáveis de Ambiente</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        .info { margin: 10px 0; padding: 10px; background: #2a2a2a; }
+        .error { color: #ff0000; }
+        .success { color: #00ff00; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug - Configuração Base44</h1>
+    <div id="output"></div>
+    
+    <script type="module">
+        const output = document.getElementById('output');
+        
+        function log(msg, isError = false) {
+            const div = document.createElement('div');
+            div.className = 'info ' + (isError ? 'error' : 'success');
+            div.textContent = msg;
+            output.appendChild(div);
+        }
+        
+        // Verificar variáveis de ambiente
+        log('=== VARIÁVEIS DE AMBIENTE ===');
+        log('VITE_BASE44_APP_ID: ' + (import.meta.env.VITE_BASE44_APP_ID || 'NÃO CONFIGURADO'), !import.meta.env.VITE_BASE44_APP_ID);
+        log('VITE_BASE44_APP_BASE_URL: ' + (import.meta.env.VITE_BASE44_APP_BASE_URL || 'NÃO CONFIGURADO'), !import.meta.env.VITE_BASE44_APP_BASE_URL);
+        log('VITE_BASE44_FUNCTIONS_VERSION: ' + (import.meta.env.VITE_BASE44_FUNCTIONS_VERSION || 'NÃO CONFIGURADO'), !import.meta.env.VITE_BASE44_FUNCTIONS_VERSION);
+        
+        log('\n=== MODO ===');
+        log('MODE: ' + import.meta.env.MODE);
+        log('DEV: ' + import.meta.env.DEV);
+        log('PROD: ' + import.meta.env.PROD);
+        
+        log('\n=== INSTRUÇÕES ===');
+        if (!import.meta.env.VITE_BASE44_APP_ID || !import.meta.env.VITE_BASE44_APP_BASE_URL) {
+            log('❌ ERRO: Variáveis de ambiente não configuradas!', true);
+            log('Configure no Netlify: Site settings → Environment variables', true);
+        } else {
+            log('✅ Variáveis configuradas corretamente!');
+        }
+    </script>
+</body>
+</html>
