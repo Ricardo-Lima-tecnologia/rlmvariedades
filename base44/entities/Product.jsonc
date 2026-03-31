@@ -1,0 +1,160 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Product name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "SEO-friendly URL slug"
+    },
+    "description": {
+      "type": "string",
+      "description": "Benefits-focused product description"
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Short tagline"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "casa-inteligente",
+        "automotivo",
+        "saude-beleza",
+        "ferramentas",
+        "eletronicos",
+        "fitness",
+        "cozinha",
+        "pets"
+      ],
+      "description": "Product category"
+    },
+    "price": {
+      "type": "number",
+      "description": "Current price in BRL"
+    },
+    "compare_price": {
+      "type": "number",
+      "description": "Original price for discount display"
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Product image URLs"
+    },
+    "video_frames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Generated video frames (30 images for carousel)"
+    },
+    "badge": {
+      "type": "string",
+      "enum": [
+        "mais-vendido",
+        "oferta",
+        "exclusivo",
+        "novo",
+        "frete-gratis",
+        ""
+      ],
+      "description": "Highlight badge"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating 1-5"
+    },
+    "review_count": {
+      "type": "integer",
+      "description": "Number of reviews"
+    },
+    "stock_status": {
+      "type": "string",
+      "enum": [
+        "in_stock",
+        "low_stock",
+        "out_of_stock"
+      ],
+      "default": "in_stock"
+    },
+    "stock_quantity": {
+      "type": "integer",
+      "description": "Available quantity"
+    },
+    "variations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "specifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "shipping_days_min": {
+      "type": "integer",
+      "default": 7
+    },
+    "shipping_days_max": {
+      "type": "integer",
+      "default": 15
+    },
+    "free_shipping": {
+      "type": "boolean",
+      "default": false
+    },
+    "featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "best_seller": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_new": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_deal": {
+      "type": "boolean",
+      "default": false
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "price",
+    "category"
+  ]
+}
