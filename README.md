@@ -1,6 +1,6 @@
 **Welcome to your Base44 project** 
 
-**Live Site:** [rlmvariedades.netlify.app](https://rlmvariedades.netlify.app)
+**Live Site:** [rlmvariedadesonline.netlify.app](https://rlmvariedadesonline.netlify.app)
 
 **About**
 
